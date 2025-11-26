@@ -522,6 +522,73 @@
             font-size: 1.15em;
         }
     </style>
+    .instagram-post {
+    max-width: 500px;
+    margin: 30px auto;
+    background: white;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.insta-header {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    gap: 12px;
+    border-bottom: 1px solid #efefef;
+}
+
+.insta-avatar {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #00A3E0, #FF6B9D);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 0.9em;
+}
+
+.insta-username {
+    font-weight: 600;
+    font-size: 0.95em;
+}
+
+.insta-image {
+    width: 100%;
+    display: block;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    background: linear-gradient(135deg, #00A3E0 0%, #FF6B9D 50%, #FFB84D 100%);
+}
+
+.insta-actions {
+    padding: 12px 15px;
+    display: flex;
+    gap: 15px;
+    border-bottom: 1px solid #efefef;
+}
+
+.insta-icon {
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.insta-icon:hover {
+    transform: scale(1.1);
+}
+
+.insta-caption {
+    padding: 15px;
+    line-height: 1.6;
+    font-size: 0.95em;
+}
+    </style>
 </head>
 <body>
     <div class="presentation">
@@ -969,46 +1036,50 @@
         </div>
   <div>
         <!-- Slide 10: Exemple de post instagram -->
- <div class="slide">
-            <div class="slide-header">
+<div class="slide">
+    <div class="slide-header">
+        <div>
+            <h1>Exemple de Communication Instagram 📸</h1>
+            <div class="subtitle">Contenu lifestyle pour la cible 25-40 ans</div>
+        </div>
+        <div class="logo">P&V</div>
+    </div>
+    <div class="slide-content">
+        <h3 style="margin-top: 0; margin-bottom: 20px; font-size: 1.5em; text-align: center;">Post Instagram type</h3>
+        <div class="instagram-post">
+            <div class="insta-header">
+                <div class="insta-avatar">P&V</div>
                 <div>
-                    <h3 style="margin-top: 0; margin-bottom: 20px; font-size: 1.5em;">📸 Exemple de post Instagram</h3>
-                        <div class="instagram-post">
-                            <div class="insta-header">
-                                <div class="insta-avatar">P&V</div>
-                                <div>
-                                    <div class="insta-username">pierreetvalances</div>
-                                    <div style="font-size: 0.85em; color: #666;">Côte d'Azur</div>
-                                </div>
-                            </div>
-                            
-                            <img src="assets/insta-photo.jpg" alt="Pierre & Vacances - Reconnecte-toi à l'essentiel" class="insta-image">
-                            
-                            <div class="insta-actions">
-                                <span class="insta-icon" style="color: #FF6B9D;">❤️</span>
-                                <span class="insta-icon">💬</span>
-                                <span class="insta-icon">📤</span>
-                            </div>
-                            
-                            <div class="insta-caption">
-                                <strong>pierreetvalances</strong> 
-                                Oublie le quotidien. Plonge dans l'instant présent. 🌊
-                                <br><br>
-                                Une piscine à débordement, une bouée rayée, et toi. C'est tout ce dont tu as besoin pour te reconnecter à l'essentiel. 
-                                <br><br>
-                                Nos espaces ont été pensés pour que tu puisses enfin souffler, sans penser à demain. Juste ici. Juste maintenant. ✨
-                                <br><br>
-                                <span style="color: #00A3E0;">#LeBreakQuiTeRessemble #SmartEscape #PoolVibes #Reconnexion #PierreEtVacances</span>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="insta-username">pierreetvalances</div>
+                    <div style="font-size: 0.85em; color: #666;">Côte d'Azur</div>
                 </div>
             </div>
-            <div class="slide-footer">
-                <div class="logo">Pierre & Vacances</div>
-                <div class="slide-number">10 / 13</div>
+            
+            <img src="assets/insta-photo.jpg" alt="Pierre & Vacances - Reconnecte-toi à l'essentiel" class="insta-image">
+            
+            <div class="insta-actions">
+                <span class="insta-icon" style="color: #FF6B9D;">❤️</span>
+                <span class="insta-icon">💬</span>
+                <span class="insta-icon">📤</span>
+            </div>
+            
+            <div class="insta-caption">
+                <strong>pierreetvalances</strong> 
+                Oublie le quotidien. Plonge dans l'instant présent. 🌊
+                <br><br>
+                Une piscine à débordement, une bouée rayée, et toi. C'est tout ce dont tu as besoin pour te reconnecter à l'essentiel. 
+                <br><br>
+                Nos espaces ont été pensés pour que tu puisses enfin souffler, sans penser à demain. Juste ici. Juste maintenant. ✨
+                <br><br>
+                <span style="color: #00A3E0;">#LeBreakQuiTeRessemble #SmartEscape #PoolVibes #Reconnexion #PierreEtVacances</span>
             </div>
         </div>
+    </div>
+    <div class="slide-footer">
+        <div class="logo">Pierre & Vacances</div>
+        <div class="slide-number">10 / 13</div>
+    </div>
+</div>
         <!-- Slide 11: UX Design -->
         <div class="slide">
             <div class="slide-header">
