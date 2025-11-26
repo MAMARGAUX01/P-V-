@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pierre & Vacances - Stratégie 25-40 ans</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            overflow: hidden;
+        }
+
+        .presentation {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .gradient-primary {
+            background: linear-gradient(135deg, #00A3E0 0%, #FF6B9D 50%, #FFB84D 100%);
+        }
+
+        .slide-header {
+            background: linear-gradient(135deg, #00A3E0 0%, #FF6B9D 50%, #FFB84D 100%);
+            color: white;
+            padding: 40px 60px;
+            min-height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        .slide-content {
+            flex: 1;
+            padding: 40px 60px;
+            background: white;
+            overflow-y: auto;
+        }
+
+        .slide-footer {
+            background: linear-gradient(90deg, #00A3E0 0%, #4ECDC4 100%);
+            padding: 20px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        h1 {
+            font-size: 3em;
+            font-weight: 700;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        h2 {
+            background: linear-gradient(135deg, #00A3E0, #FF6B9D);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2.2em;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        h3 {
+            color: #00A3E0;
+            font-size: 1.6em;
+            margin: 20px 0 12px 0;
+            font-weight: 600;
+        }
+
+        .logo {
+            font-size: 2em;
+            font-weight: 700;
+            color: white;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            opacity: 0.95;
+            margin-top: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            margin: 25px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #e3f4fc 0%, #f0f9ff 100%);
+            padding: 22px;
+            border-radius: 15px;
+            border-left: 5px solid #00A3E0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #00A3E0;
+            margin: 8px 0;
+        }
+
+        .stat-label {
+            font-size: 1em;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .key-points {
+            display: grid;
+            gap: 18px;
+            margin: 25px 0;
+        }
+
+        .point {
+            background: linear-gradient(135deg, #e3f4fc 0%, #ffe8f0 100%);
+            padding: 22px;
+            border-radius: 18px;
+            border-left: 5px solid #FF6B9D;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .point:hover {
+            transform: translateX(5px);
+            box-shadow: 0 6px 20px rgba(255,107,157,0.2);
+        }
+
+        .point strong {
+            background: linear-gradient(135deg, #00A3E0, #FF6B9D);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.2em;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #00A3E0 0%, #FF6B9D 50%, #FFB84D 100%);
+            color: white;
+            padding: 35px;
+            border-radius: 22px;
+            margin: 25px 0;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0,163,224,0.3);
+        }
+
+        .highlight-box h3 {
+            color: white;
+            font-size: 2em;
+            margin-bottom: 12px;
+        }
+
+        .columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 25px 0;
+        }
+
+        .column {
+            background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
+            padding: 28px;
+            border-radius: 18px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 10px 0 10px 30px;
+            position: relative;
+            font-size: 1.05em;
+            line-height: 1.6;
+        }
+
+        li:before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: #FF6B9D;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .persona-container {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 35px;
+            background: linear-gradient(135deg, #fff9e6 0%, #ffe8f0 100%);
+            padding: 35px;
+            border-radius: 22px;
+            border: 4px solid #FFB84D;
+            box-shadow: 0 8px 30px rgba(255,184,77,0.2);
+        }
+
+        .persona-illustration {
+            background: linear-gradient(135deg, #FF6B9D, #FFB84D);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(255,107,157,0.3);
+        }
+
+        .persona-avatar {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .avatar-circle {
+            width: 160px;
+            height: 160px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4.5em;
+            margin-bottom: 18px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+            margin: 25px 0;
+        }
+
+        .strategy-card {
+            background: white;
+            padding: 28px 22px;
+            border-radius: 18px;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .strategy-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 18px;
+            padding: 3px;
+            background: linear-gradient(135deg, #00A3E0, #FF6B9D, #FFB84D);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+
+        .strategy-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(255,107,157,0.2);
+        }
+
+        .emoji {
+            font-size: 2.8em;
+            margin-bottom: 12px;
+        }
+
+        .title-slide {
+            background: linear-gradient(135deg, #00A3E0 0%, #FF6B9D 50%, #FFB84D 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .title-slide::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            top: -250px;
+            right: -100px;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .title-slide::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 50%;
+            bottom: -200px;
+            left: -100px;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+
+        .title-content {
+            padding: 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .title-slide h1 {
+            font-size: 3.8em;
+            margin-bottom: 28px;
+            text-shadow: 2px 2px 20px rgba(0,0,0,0.2);
+        }
+
+        .title-slide .subtitle {
+            font-size: 1.8em;
+            margin-bottom: 45px;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        button {
+            background: linear-gradient(135deg, #00A3E0, #FF6B9D);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.05em;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(255,107,157,0.4);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255,107,157,0.5);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .slide-number {
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .fun-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #FFB84D, #FF6B9D);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9em;
+            margin-left: 15px;
+            box-shadow: 0 4px 10px rgba(255,107,157,0.3);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 14px;
+            border-radius: 18px;
+            font-size: 0.82em;
+            font-weight: 600;
+            margin: 4px;
+        }
+
+        .badge-success { background: #28a745; color: white; }
+        .badge-warning { background: #ffc107; color: #333; }
+        .badge-danger { background: #dc3545; color: white; }
+
+        .alert-box {
+            background: linear-gradient(135deg, #dc3545, #e85d5d);
+            color: white;
+            padding: 30px;
+            border-radius: 18px;
+            margin: 20px 0;
+            border: 3px solid #ff6b6b;
+        }
+
+        .alert-box h3 {
+            color: white;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, #28a745, #4ecdc4);
+            color: white;
+            padding: 30px;
+            border-radius: 18px;
+            margin: 20px 0;
+        }
+
+        .success-box h3 {
+            color: white;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            font-size: 0.95em;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 14px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 12px 14px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tr:hover { background: #f8f9ff; }
+
+        .data-insight {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffe8cc 100%);
+            border-left: 5px solid #FFB84D;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+            font-size: 1.05em;
+        }
+
+        .action-item {
+            background: linear-gradient(135deg, #e8f8f5 0%, #d4f1f4 100%);
+            border-left: 5px solid #4ECDC4;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 12px 0;
+        }
+
+        .action-item strong {
+            color: #44A08D;
+            font-size: 1.15em;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <!-- Slide 1: Titre -->
+        <div class="slide active title-slide">
+            <div class="title-content">
+                <div class="logo" style="font-size: 3.5em; margin-bottom: 40px;">Pierre & Vacances</div>
+                <h1>Reconquête de la cible 25-40 ans</h1>
+                <div class="subtitle">Stratégie de repositionnement basée sur une enquête terrain</div>
+                <div class="fun-badge" style="margin-top: 30px; font-size: 1.3em;">Transformation validée par 43 répondants</div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Résultats enquête -->
+        <div class="slide">
+            <div class="slide-header">
+                <div>
+                    <h1>Résultats de l'Enquête Terrain</h1>
+                    <div class="subtitle">43 répondants • Cible 25-40 ans</div>
+                </div>
+                <div class="logo">P&V</div>
+            </div>
+            <div class="slide-content">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Connaissent P&V</div>
+                        <div class="stat-value">93%</div>
+                        <span class="badge badge-success">Notoriété spontanée forte</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Image "Familiale"</div>
+                        <div class="stat-value">95%</div>
+                        <span class="badge badge-danger">Problème structurel</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Perçue "Pas Moderne"</div>
+                        <div class="stat-value">80%</div>
+                        <span class="badge badge-danger">Rebranding nécessaire</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Budget > 800€</div>
+                        <div class="stat-value">47%</div>
+                        <span class="badge badge-success">Segment premium identifié</span>
+                    </div>
+                </div>
+
+                <div class="alert-box">
+                    <h3>Triple problème d'image identifié</h3>
+                    <ul style="line-height: 1.8; margin-top: 12px; font-size: 1.05em;">
+                        <li><strong>95% associent P&V à "marque familiale"</strong> - L'image exclusive famille bloque l'accès à la cible 25-40 ans</li>
+                        <li><strong>80% considèrent la marque "pas moderne"</strong> - Perception datée qui éloigne les jeunes actifs urbains</li>
+                        <li><strong>70% estiment que P&V "ne leur correspond pas"</strong> - Sentiment d'exclusion de la cible prioritaire</li>
+                    </ul>
+                    <p style="margin-top: 18px; font-size: 1.15em; border-top: 2px solid white; padding-top: 15px; font-weight: 600;">
+                        Le repositionnement de marque devient une priorité stratégique avant tout investissement marketing
+                    </p>
+                </div>
+
+                <div class="success-box">
+                    <h3>Points positifs identifiés</h3>
+                    <ul style="line-height: 1.8; margin-top: 12px; font-size: 1.05em;">
+                        <li><strong>93% connaissent spontanément la marque</strong> - Capital notoriété acquis, focus sur le repositionnement</li>
+                        <li><strong>47% disposent d'un budget supérieur à 800€</strong> - Le segment premium existe et dispose d'un pouvoir d'achat élevé</li>
+                        <li><strong>Intérêt partagé sur l'all-inclusive (50/50)</strong> - Nécessité de développer une offre duale pour couvrir les deux segments</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div class="logo">Pierre & Vacances</div>
+                <div class="slide-number">2 / 12</div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Analyse concurrentielle -->
+        <div class="slide">
+            <div class="slide-header">
+                <div>
+                    <h1>Concurrence et Critères de Décision</h1>
+                    <div class="subtitle">Enseignements de l'enquête</div>
+                </div>
+                <div class="logo">P&V</div>
+            </div>
+            <div class="slide-content">
+                <h2 style="text-align: center; margin-bottom: 25px;">Environnement concurrentiel et facteurs de choix</h2>
+                
+                <div class="columns">
+                    <div class="column" style="border-left: 6px solid #FF6B9D;">
+                        <h3>Références concurrentielles citées</h3>
+                        <ul style="margin-top: 15px;">
+                            <li><strong>Booking.com</strong> - Présence dominante sur le marché</li>
+                            <li><strong>Airbnb</strong> - Référence lifestyle et expérience</li>
+                            <li><strong>Abritel</strong> - Concurrent direct sur le segment résidentiel</li>
+                            <li><strong>Hotels.com</strong> - Alternative hôtelière classique</li>
+                        </ul>
+                        <div style="margin-top: 20px; padding: 15px; background: #fff; border-radius: 12px; border: 2px solid #FF6B9D;">
+                            <strong style="color: #FF6B9D;">Recommandation :</strong>
+                            <p style="margin-top: 8px; line-height: 1.6;">Analyse comparative approfondie des parcours UX et positionnements tarifaires de ces acteurs majeurs</p>
+                        </div>
+                    </div>
+                    <div class="column" style="border-left: 6px solid #FFB84D;">
+                        <h3>Critères de choix principaux</h3>
+                        <div style="margin-top: 15px;">
+                            <div style="background: #fff; padding: 12px; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid #FFB84D;">
+                                <strong style="font-size: 1.15em;">1. Prix et rapport qualité-prix</strong>
+                                <p style="margin-top: 5px; color: #666;">Facteur décisif dans le processus de décision</p>
+                            </div>
+                            <div style="background: #fff; padding: 12px; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid #00A3E0;">
+                                <strong style="font-size: 1.15em;">2. Localisation et accessibilité</strong>
+                                <p style="margin-top: 5px; color: #666;">Destination géographique et facilité d'accès</p>
+                            </div>
+                            <div style="background: #fff; padding: 12px; border-radius: 10px; border-left: 4px solid #4ECDC4;">
+                                <strong style="font-size: 1.15em;">3. Offre d'activités</strong>
+                                <p style="margin-top: 5px; color: #666;">Disponibilité d'expériences et animations</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="data-insight" style="margin-top: 25px;">
+                    <strong>Insight clé :</strong> Les réseaux sociaux (Instagram, TikTok) sont massivement mentionnés comme sources d'inspiration principale pour les voyages. Opportunité d'investissement digital majeure identifiée.
+                </div>
+
+                <div class="action-item">
+                    <strong>Actions recommandées</strong>
+                    <ul style="margin-top: 10px; line-height: 1.7;">
+                        <li>Développer une campagne comparative "P&V vs Airbnb : analyse du coût total"</li>
+                        <li>Mettre en avant les destinations premium et l'accessibilité géographique</li>
+                        <li>Créer un catalogue d'activités lifestyle (yoga, randonnée, gastronomie locale)</li>
+                        <li>Tripler l'investissement social media : Instagram (40%) + TikTok (20%)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div class="logo">Pierre & Vacances</div>
+                <div class="slide-number">3 / 12</div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Le Persona -->
+        <div class="slide">
+            <div class="slide-header">
+                <div>
+                    <h1>Persona Cible</h1>
+                    <div class="subtitle">Profil type validé par l'enquête</div>
+                </div>
+                <div class="logo">P&V</div>
+            </div>
+            <div class="slide-content">
+                <div class="persona-container">
+                    <div class="persona-illustration">
+                        <div class="persona-avatar">
+                            <div class="avatar-circle">🧘‍♀️</div>
+                            <div style="font-size: 1.8em; font-weight: 700; margin-bottom: 10px;">Léa</div>
+                            <div style="font-size: 1.3em; opacity: 0.9;">32 ans • Lyon</div>
+                            <div style="font-size: 1.1em; margin-top: 15px; opacity: 0.85;">UX Designer</div>
+                        </div>
+                    </div>
+                    
+                    <div class="persona-details">
+                        <h2 style="color: #FF6B9D; margin-bottom: 25px;">Citadine connectée • Budget confirmé 800€+</h2>
+                        
+                        <div style="margin-bottom: 25px;">
+                            <h3 style="color: #FFB84D; font-size: 1.4em;">Profil socio-démographique</h3>
+                            <ul style="margin-top: 10px;">
+                                <li>Revenu mensuel net : 2 500€</li>
+                                <li>Cadre urbain dynamique, secteur tech</li>
+                                <li>Pratique régulière du yoga et de la randonnée</li>
+                                <li>S'inspire via Instagram et TikTok pour ses voyages</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h3 style="color: #4ECDC4; font-size: 1.4em;">Attentes en matière de vacances</h3>
+                            <ul style="margin-top: 10px;">
+                                <li>Expériences nature immersives et authentiques</li>
+                                <li>City-breaks entre amis ou en couple</li>
+                                <li>Recherche de liberté et de déconnexion</li>
+                                <li>Transparence tarifaire et valeur perçue</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="data-insight" style="margin-top: 25px;">
+                    <strong>Validation quantitative :</strong> 47% des répondants disposent d'un budget supérieur à 800€ par séjour, confirmant l'existence d'un segment premium à fort pouvoir d'achat correspondant à ce profil type.
+                </div>
+
+                <div class="point" style="margin-top: 20px; border-left-color: #dc3545; background: linear-gradient(135deg, #fff4f4 0%, #ffe8f0 100%);">
+                    <strong>Perception actuelle de Pierre & Vacances</strong>
+                    "Marque vieillissante (80%), positionnée famille uniquement (95%), ne correspond pas à mes attentes (70%). Je me tourne naturellement vers Booking ou Airbnb."
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div class="logo">Pierre & Vacances</div>
+                <div class="slide-number">4 / 12</div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Stratégie repositionnement -->
+        <div class="slide">
+            <div class="slide-header">
+                <div>
+                    <h1>Stratégie de Repositionnement</h1>
+                    <div class="subtitle">Réponse stratégique aux insights terrain</div>
+                </div>
+                <div class="logo">P&V</div>
+            </div>
+            <div class="slide-content">
+                <div class="highlight-box" style="background: linear-gradient(135deg, #FFB84D 0%, #FF6B9D 100%); padding: 45px;">
+                    <h3 style="font-size: 2.8em;">« Le break qui te ressemble »</h3>
+                    <p style="font-size: 1.3em; margin-top: 15px; opacity: 0.95;">Transformation du positionnement : de "vacances familiales" vers "expériences personnalisées 25-40 ans"</p>
+                </div>
+                
+                <h2 style="text-align: center; margin: 30px 0 25px 0;">Trois piliers de transformation</h2>
+                
+                <div class="key-points">
+                    <div class="point" style="border-left-color: #00A3E0;">
+                        <strong>Transformation perceptuelle</strong>
+                        Déconstruire l'image "familiale uniquement" (95%) pour incarner la liberté et l'authenticité accessibles à tous les profils adultes
+                    </div>
+                    <div class="point" style="border-left-color: #FF6B9D;">
+                        <strong>Refonte de l'identité visuelle</strong>
+                        Moderniser intégralement l'identité de marque (80% la perçoivent comme "pas moderne") : design contemporain, palette vibrante, esthétique lifestyle
+                    </div>
+                    <div class="point" style="border-left-color: #4ECDC4;">
+                        <strong>Communication valeur-prix</strong>
+                        Répondre au critère prioritaire n°1 : développer une campagne "P&V vs Airbnb : comparatif coût total" valorisant le rapport qualité-prix supérieur
+                    </div>
+                </div>
+
+                <div class="action-item" style="margin-top: 25px;">
+                    <strong>Calendrier d'implémentation Q1 2026</strong>
+                    <ul style="margin-top: 12px; line-height: 1.8;">
+                        <li><strong>Janvier :</strong> Campagne "Adults Only" pour déconstruire l'image familiale exclusive (Budget : 200K€)</li>
+                        <li><strong>Février :</strong> Refonte complète de l'identité visuelle - logo, site web, supports de communication (Budget : 150K€)</li>
+                        <li><strong>Mars :</strong> Lancement de la double gamme - "All-In Zen" et "Flex & Free" répondant à la polarisation 50/50</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div class="logo">Pierre & Vacances</div>
+                <div class="slide-number">5 / 12</div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Double offre -->
+        <div class="slide">
+            <div class="slide-header">
+                <div>
+                    <h1>Architecture Produit Duale</h1>
+                    <div class="subtitle">Réponse à la polarisation identifiée (50/50)</div>
+                </div>
+                <div class="logo">P&V</div>
+            </div>
+            <div class="slide-content">
+                <div class="data-insight" style="margin-bottom: 30px;">
+                    <strong>Constat terrain :</strong> L'enquête révèle une répartition équilibrée concernant l'intérêt pour l'all-inclusive (50% intéressés, 50% préférant la flexibilité). Cette polarisation nécessite une offre duale pour couvrir l'ensemble du marché cible.
+                </div>
+
+                <div class="columns">
+                    <div style="background: linear-gradient(135deg, #e8f8f5 0%, #d4f1f4 100%); padding: 35px; border-radius: 20px; border: 4px solid #4ECDC4; box-shadow: 0 8px 25px rgba(78,205,196,0.2);">
+                        <div style="text-align: center; font-size: 3.5em; margin-bottom: 15px;">🧘</div>
+                        <h3 style="color: #44A08D; text-align: center; font-size: 2em; margin-bottom: 20px;">All-In Zen</h3>
+                        <p style="text-align: center; font-style: italic; margin-bottom: 20px; color: #666;">"Tout est inclus, concentration sur l'essentiel"</p>
+                        <ul style="line-height: 1.8;">
+                            <li>Hébergement + restauration complète</li>
+                            <li>Accès spa et piscine en illimité</li>
+                            <li>Sessions yoga matinales incluses</li>
+                            <li>Programme activités bien-être</li>
+                            <li>Service conciergerie personnalisé</li>
+                        </ul>
+                        <div style="margin-top: 20px; padding: 15px; background: white; border-radius: 12px; text-align: center;">
+                            <strong style="color: #4ECDC4; font-size: 1.3em;">1 200€ - 2 500€</strong>
+                            <p style="margin-top: 5px; font-size: 0.9em; color: #666;">Segment : Zendezvous</p>
+                        </div>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #fff4e6 0%, #ffe8f0 100%); padding: 35px; border-radius: 20px; border: 4px solid #FF6B9D; box-shadow: 0 8px 25px rgba(255,107,157,0.2);">
+                        <div style="text-align: center; font-size: 3.5em; margin-bottom: 15px;">🎒</div>
+                        <h3 style="color: #FF6B9D; text-align: center; font-size: 2em; margin-bottom: 20px;">Flex & Free</h3>
+                        <p style="text-align: center; font-style: italic; margin-bottom: 20px; color: #666;">"Liberté totale, personnalisation maximale"</p>
+                        <ul style="line-height: 1.8;">
+                            <li>Hébergement modulable selon durée</li>
+                            <li>Restauration à la carte optionnelle</li>
+                            <li>Catalogue activités en options</li>
+                            <li>Cuisine équipée disponible</li>
+                            <li>Flexibilité check-in/out maximale</li>
+                        </ul>
+                        <div style="margin-top: 20px; padding: 15px; background: white; border-radius: 12px; text-align: center;">
+                            <strong style="color: #FF6B9D; font-size: 1.3em;">600€ - 1 500€</strong>
+                            <p style="margin-top: 5px; font-size: 0.9em; color: #666;">Segments : Festifs & Aventuriers</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight-box" style="margin-top: 30px; padding: 30px;">
+                    <p style="font-size: 1.3em; font-weight: 600;">Avantage concurrentiel : liberté de choix structurée que ni Booking ni Airbnb ne proposent sous format packagé</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div class="logo">Pierre & Vacances</div>
+                <div class="slide-number">6 / 12</div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Communication concept -->
+        <div class="slide">
+            <div class="slide-header">
+                <div>
+                    <h1>Concept de Communication 💬</h1>
+                    <div class="subtitle">Messages qui résonnent avec la cible</div>
+                </div>
+                <div class="logo">P&V</div>
+            </div>
+            <div class="slide-content">
+                <div class="highlight-box" style="background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%); margin-bottom: 35px; padding: 45px;">
+                    <h3 style="font-size: 2.5em;">🌿 « Reconnecte-toi à ce qui compte vraiment » 🌿</h3>
+                    <p style="font-size: 1.2em; margin-top: 15px;">Approche émotionnelle centrée sur l'authenticité et la liberté</p>
+                </div>
+
+                <h2 style="text-align: center; margin-bottom: 30px;">Micro-expériences immersives</h2>
+                <div class="strategy-grid">
+                    <div class="strategy-card">
+                        <div class="emoji">🏞️</div>
+                        <strong style="font-size: 1.2em; display: block; margin-bottom: 10px; color: #4ECDC4;">Séjours Nature</strong>
+                        <p style="color: #666; line-height: 1.6;">Randonnées guidées, yoga en plein air, découverte des sentiers locaux. Répond au critère "activités" (Top 3).</p>
+                    </div>
+                    <div class="strategy-card">
+                        <div class="emoji">🧘</div>
+                        <strong style="font-size: 1.2em; display: block; margin-bottom: 10px; color: #FF6B9D;">Ateliers Bien-être</strong>
+                        <p style="color: #666; line-height: 1.6;">Méditation, spa naturel, reconnexion corps-esprit. Cible les "Zendezvous" identifiés dans l'enquête.</p>
+                    </div>
+                    <div class="strategy-card">
+                        <div class="emoji">💻</div>
+                        <strong style="font-size: 1.2em; display: block; margin-bottom: 10px; color: #00A3E0;">Workation Premium</strong>
+                        <p style="color: #666; line-height: 1.6;">Espaces coworking vue mer, wifi fibre. Répond à la tendance télétravail des 25-40 ans.</p>
+                    </div>
+                    <div class="strategy-card">
+                        <div class="emoji">🍷</div>
+                        <strong style="font-size: 1.2em; display: block; margin-bottom: 10px; color: #FFB84D;">Découvertes Locales</strong>
+                        <p style="color: #666; line-height: 1.6;">Gastronomie, vignobles, artisanat. Répond au critère "localisation" et authenticité attendue.</p>
+                    </div>
+                </div>
+
+                <div class="data-insight" style="margin-top: 25px;">
+                    <strong>📱 Canal prioritaire :</strong> L'enquête confirme que les réseaux sociaux sont LA source d'inspiration. Budget social media à tripler : Instagram 40%, TikTok 20%, Influence 10%.
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div class="logo">Pierre & Vacances</div>
+                <div class="slide-number">8 / 11</div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Canaux digitaux -->
+        <div class="slide">
+            <div class="slide-header">
+                <div>
+                    <h1>Écosystème Digital 📱</h1>
+                    <div class="subtitle">Investissement massif social media</div>
+                </div>
+                <div class="logo">P&V</div>
+            </div>
+            <div class="slide-content">
+                <div class="alert-box" style="background: linear-gradient(135deg, #FF6B9D 0%, #FFB84D 100%);">
+                    <h3>🚨 PRIORITÉ ABSOLUE : SOCIAL MEDIA</h3>
+                    <p style="font-size: 1.2em; margin-top: 10px;">L'enquête révèle que les réseaux sociaux sont massivement cités comme source d'inspiration voyage par la cible 25-40 ans.</p>
+                </div>
+
+                <div class="strategy-grid" style="margin-top: 30px;">
+                    <div class="strategy-card" style="border-left: 5px solid #E4405F;">
+                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #833AB4, #FD1D1D, #FCAF45); border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 2em;">📷</div>
+                            <div>
+                                <strong style="font-size: 1.4em; color: #E4405F;">Instagram</strong>
+                                <div style="color: #666; font-size: 0.9em;">40% du budget digital</div>
+                            </div>
+                        </div>
+                        <ul style="line-height: 1.7; font-size: 0.95em;">
+                            <li>Stories immersives quotidiennes</li>
+                            <li>Reels "avant/après séjour"</li>
+                            <li>UGC (contenu utilisateur)</li>
+                            <li>Partenariats micro-influenceurs</li>
+                        </ul>
+                    </div>
+
+                    <div class="strategy-card" style="border-left: 5px solid #000;">
+                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                            <div style="width: 60px; height: 60px; background: #000; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 2em;">🎵</div>
+                            <div>
+                                <strong style="font-size: 1.4em;">TikTok</strong>
+                                <div style="color: #666; font-size: 0.9em;">20% du budget digital</div>
+                            </div>
+                        </div>
+                        <ul style="line-height: 1.7; font-size: 0.95em;">
+                            <li>Vidéos courtes authentiques</li>
+                            <li>Challenges #LeBreakQuiTeRessemble</li>
+                            <li>Behind the scenes</li>
+                            <li>Tendances lifestyle</li>
+                        </ul>
+                    </div>
+
+                    <div class="strategy-card" style="border-left: 5px solid #FF0000;">
+                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                            <div style="width: 60px; height: 60px; background: #FF0000; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 2em;">▶️</div>
+                            <div>
+                                <strong style="font-size: 1.4em; color: #FF0000;">YouTube</strong>
+                                <div style="color: #666; font-size: 0.9em;">15% du budget digital</div>
+                            </div>
+                        </div>
+                        <ul style="line-height: 1.7; font-size: 0.95em;">
+                            <li>Vlogs expériences longues</li>
+                            <li>Guides destinations</li>
+                            <li>Témoignages clients</li>
+                            <li>Séries "Échappées Modernes"</li>
+                        </ul>
+                    </div>
+
+                    <div class="strategy-card" style="border-left: 5px solid #0077B5;">
+                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                            <div style="width: 60px; height: 60px; background: #0077B5; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 2em;">💼</div>
+                            <div>
+                                <strong style="font-size: 1.4em; color: #0077B5;">LinkedIn</strong>
+                                <div style="color: #666; font-size: 0.9em;">10% du budget digital</div>
+                            </div>
+                        </div>
+                        <ul style="line-height: 1.7; font-size: 0.95em;">
+                            <li>Workation & télétravail</li>
+                            <li>Séminaires entreprises</li>
+                            <li>Contenu B2B</li>
+                            <li>Thought leadership</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="action-item" style="margin-top: 25px;">
+                    <strong>💰 Budget Social Media Q1 2026 : 300K€</strong>
+                    <p style="margin-top: 10px; line-height: 1.7;">Soit 3x le budget actuel. ROI attendu : +150% de notoriété auprès des 25-40 ans, -40% du coût d'acquisition client via l'organique.</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div class="logo">Pierre & Vacances</div>
+                <div class="slide-number">9 / 10</div>
+            </div>
+        </div>
+  <div>
+                        <h3 style="margin-top: 0; margin-bottom: 20px; font-size: 1.5em;">📸 Exemple de post Instagram</h3>
+                        <div class="instagram-post">
+                            <div class="insta-header">
+                                <div class="insta-avatar">P&V</div>
+                                <div>
+                                    <div class="insta-username">pierreetvalances</div>
+                                    <div style="font-size: 0.85em; color: #666;">Côte d'Azur</div>
+                                </div>
+                            </div>
+                            
+                            <img src="assets/insta-photo.jpg" alt="Pierre & Vacances - Reconnecte-toi à l'essentiel" class="insta-image">
+                            
+                            <div class="insta-actions">
+                                <span class="insta-icon" style="color: #FF6B9D;">❤️</span>
+                                <span class="insta-icon">💬</span>
+                                <span class="insta-icon">📤</span>
+                            </div>
+                            
+                            <div class="insta-caption">
+                                <strong>pierreetvalances</strong> 
+                                Oublie le quotidien. Plonge dans l'instant présent. 🌊
+                                <br><br>
+                                Une piscine à débordement, une bouée rayée, et toi. C'est tout ce dont tu as besoin pour te reconnecter à l'essentiel. 
+                                <br><br>
+                                Nos espaces ont été pensés pour que tu puisses enfin souffler, sans penser à demain. Juste ici. Juste maintenant. ✨
+                                <br><br>
+                                <span style="color: #00A3E0;">#LeBreakQuiTeRessemble #SmartEscape #PoolVibes #Reconnexion #PierreEtVacances</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div class="logo">Pierre & Vacances</div>
+                <div class="slide-number">10 / 11</div>
+            </div>
+        </div>
+        <!-- Slide 11: UX Design -->
+        <div class="slide">
+            <div class="slide-header">
+                <div>
+                    <h1>Expérience UX Optimisée 💻</h1>
+                    <div class="subtitle">De la découverte à la réservation en 5 min</div>
+                </div>
+                <div class="logo">P&V</div>
+            </div>
+            <div class="slide-content">
+                <div class="data-insight" style="margin-bottom: 30px;">
+                    <strong>🎯 Objectif data-driven :</strong> L'enquête révèle que 70% pensent que P&V "ne leur correspond pas". Le site doit immédiatement démontrer le contraire via personnalisation et esthétique moderne.
+                </div>
+
+                <div class="strategy-grid">
+                    <div class="strategy-card">
+                        <div class="emoji">🖥️</div>
+                        <strong style="font-size: 1.2em; display: block; margin-bottom: 10px; color: #00A3E0;">Refonte Site & App</strong>
+                        <p style="color: #666; line-height: 1.6;">Design moderne mobile-first, navigation intuitive, identité visuelle renouvelée (80% attendent du moderne).</p>
+                    </div>
+                    <div class="strategy-card">
+                        <div class="emoji">⚡</div>
+                        <strong style="font-size: 1.2em; display: block; margin-bottom: 10px; color: #FFB84D;">Simulateur "Ton Break"</strong>
+                        <p style="color: #666; line-height: 1.6;">Personnalisation en 3 clics selon profil (Zendezvous, Festif, Aventurier), budget (800€+ segment validé), dates.</p>
+                    </div>
+                    <div class="strategy-card">
+                        <div class="emoji">✨</div>
+                        <strong style="font-size: 1.2em; display: block; margin-bottom: 10px; color: #FF6B9D;">Navigation Émotionnelle</strong>
+                        <p style="color: #666; line-height: 1.6;">Parcours par aspirations : déconnexion, sport, culture, gastronomie. Répond aux motivations identifiées.</p>
+                    </div>
+                    <div class="strategy-card">
+                        <div class="emoji">🎯</div>
+                        <strong style="font-size: 1.2em; display: block; margin-bottom: 10px; color: #4ECDC4;">Transparence Prix</strong>
+                        <p style="color: #666; line-height: 1.6;">Comparateur intégré "vs Booking/Airbnb", pas de frais cachés. Répond au critère n°1 : le prix.</p>
+                    </div>
+                </div>
+
+                <h3 style="margin: 30px 0 20px 0; text-align: center;">Parcours utilisateur optimisé</h3>
+                <div style="background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%); padding: 30px; border-radius: 18px; border: 3px solid #00A3E0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                        <div style="text-align: center; flex: 1; min-width: 120px;">
+                            <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #00A3E0, #4ECDC4); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; color: white; font-size: 1.8em; font-weight: 700;">1</div>
+                            <strong>Inspiration</strong>
+                            <p style="font-size: 0.85em; color: #666; margin-top: 5px;">Social media</p>
+                        </div>
+                        <div style="font-size: 2em; color: #00A3E0;">→</div>
+                        <div style="text-align: center; flex: 1; min-width: 120px;">
+                            <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #FF6B9D, #FFB84D); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; color: white; font-size: 1.8em; font-weight: 700;">2</div>
+                            <strong>Découverte</strong>
+                            <p style="font-size: 0.85em; color: #666; margin-top: 5px;">Site moderne</p>
+                        </div>
+                        <div style="font-size: 2em; color: #FF6B9D;">→</div>
+                        <div style="text-align: center; flex: 1; min-width: 120px;">
+                            <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #FFB84D, #FF6B9D); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; color: white; font-size: 1.8em; font-weight: 700;">3</div>
+                            <strong>Personnalisation</strong>
+                            <p style="font-size: 0.85em; color: #666; margin-top: 5px;">Simulateur 3 clics</p>
+                        </div>
+                        <div style="font-size: 2em; color: #FFB84D;">→</div>
+                        <div style="text-align: center; flex: 1; min-width: 120px;">
+                            <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #4ECDC4, #44A08D); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; color: white; font-size: 1.8em; font-weight: 700;">4</div>
+                            <strong>Réservation</strong>
+                            <p style="font-size: 0.85em; color: #666; margin-top: 5px;">< 5 minutes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div class="logo">Pierre & Vacances</div>
+                <div class="slide-number">11 / 12</div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Plan d'action -->
+        <div class="slide">
+            <div class="slide-header">
+                <div>
+                    <h1>Plan d'Action 2026</h1>
+                    <div class="subtitle">Feuille de route opérationnelle</div>
+                </div>
+                <div class="logo">P&V</div>
+            </div>
+            <div class="slide-content">
+                <div class="highlight-box" style="padding: 35px; margin-bottom: 30px;">
+                    <h3 style="font-size: 2.2em; margin-bottom: 15px;">Objectif : Déconstruction du triptyque d'image négatif en 12 mois</h3>
+                    <p style="font-size: 1.15em;">95% "familiale" → 60% | 80% "pas moderne" → 40% | 70% "ne correspond pas" → 35%</p>
+                </div>
+
+                <div style="background: white; padding: 30px; border-radius: 18px; box-shadow: 0 6px 20px rgba(0,0,0,0.1); margin-bottom: 20px;">
+                    <h3 style="color: #FF6B9D; margin-bottom: 20px;">Q1 2026 (Janvier - Mars) - Phase Lancement</h3>
+                    <div class="action-item" style="margin-bottom: 12px;">
+                        <strong>Janvier : Campagne "Adults Only"</strong>
+                        <p style="margin-top: 8px; line-height: 1.6;">Déconstruction de l'image familiale exclusive via campagne multicanale. Visuels lifestyle 25-40 ans, zéro représentation enfants. Budget alloué : 200K€</p>
+                    </div>
+                    <div class="action-item" style="margin-bottom: 12px;">
+                        <strong>Février : Refonte identité visuelle intégrale</strong>
+                        <p style="margin-top: 8px; line-height: 1.6;">Nouveau logo, charte graphique modernisée, ton de voix repositionné. Déploiement tous supports. Budget alloué : 150K€</p>
+                    </div>
+                    <div class="action-item">
+                        <strong>Mars : Lancement architecture produit duale</strong>
+                        <p style="margin-top: 8px; line-height: 1.6;">"All-In Zen" (formule inclusive) + "Flex & Free" (formule flexible). Communication différenciée par segment.</p>
+                    </div>
+                </div>
+
+                <div style="background: white; padding: 30px; border-radius: 18px; box-shadow: 0 6px 20px rgba(0,0,0,0.1); margin-bottom: 20px;">
+                    <h3 style="color: #00A3E0; margin-bottom: 20px;">Q2-Q3 2026 (Avril - Septembre) - Phase Amplification</h3>
+                    <div class="action-item" style="margin-bottom: 12px;">
+                        <strong>Multiplication par 3 de l'investissement social media</strong>
+                        <p style="margin-top: 8px; line-height: 1.6;">Instagram 40%, TikTok 20%, YouTube 15%, LinkedIn 10%. Programme partenariats influenceurs. Budget alloué : 300K€</p>
+                    </div>
+                    <div class="action-item" style="margin-bottom: 12px;">
+                        <strong>Refonte plateforme digitale (site & application mobile)</strong>
+                        <p style="margin-top: 8px; line-height: 1.6;">UX contemporaine, simulateur personnalisé intégré, navigation aspirationnelle, comparateur tarifaire transparent.</p>
+                    </div>
+                    <div class="action-item">
+                        <strong>Opérations pop-up urbains "Reconnect"</strong>
+                        <p style="margin-top: 8px; line-height: 1.6;">Installations éphémères Paris/Lyon/Bordeaux : espaces immersifs, dégustations, expériences VR nature. Budget alloué : 100K€</p>
+                    </div>
+                </div>
+
+                <div style="background: white; padding: 30px; border-radius: 18px; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+                    <h3 style="color: #4ECDC4; margin-bottom: 20px;">Q4 2026 (Octobre - Décembre) - Phase Consolidation</h3>
+                    <div class="action-item" style="margin-bottom: 12px;">
+                        <strong>Étude d'impact quantitative</strong>
+                        <p style="margin-top: 8px; line-height: 1.6;">Nouvelle enquête terrain 100+ répondants pour mesurer l'évolution des 3 KPIs d'image (familiale / moderne / correspondance).</p>
+                    </div>
+                    <div class="action-item">
+                        <strong>Campagne de fin d'année repositionnée</strong>
+                        <p style="margin-top: 8px; line-height: 1.6;">Capitalisation sur la nouvelle identité pour capter les réservations 2027. Budget alloué : 150K€</p>
+                    </div>
+                </div>
+
+                <div class="success-box" style="margin-top: 30px; padding: 35px;">
+                    <h3 style="font-size: 2em;">Budget Total Transformation 2026 : 900K€</h3>
+                    <p style="font-size: 1.15em; margin-top: 12px; line-height: 1.7;">ROI projetés : +200% réservations segment 25-40 ans | Réduction 50% perception "familiale uniquement" | +150% notoriété moderne qualifiée</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div class="logo">Pierre & Vacances</div>
+                <div class="slide-number">12 / 13</div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Conclusion -->
+        <div class="slide">
+            <div class="slide-header">
+                <div>
+                    <h1>Vision 2027</h1>
+                    <div class="subtitle">Ambition stratégique à moyen terme</div>
+                </div>
+                <div class="logo">P&V</div>
+            </div>
+            <div class="slide-content">
+                <div class="highlight-box" style="padding: 60px; margin: 50px 0;">
+                    <h3 style="font-size: 3em; margin-bottom: 30px;">Devenir la référence du "Smart Escape" 25-40 ans</h3>
+                    <p style="font-size: 1.6em; line-height: 1.8; font-weight: 500;">
+                        Positionner Pierre & Vacances comme l'acteur incontournable du tourisme hybride : confort structuré, authenticité locale et liberté personnalisée
+                    </p>
+                </div>
+
+                <div class="columns">
+                    <div class="column" style="background: linear-gradient(135deg, #e3f4fc 0%, #d4f1f4 100%); border-left: 6px solid #00A3E0; padding: 40px;">
+                        <h3 style="font-size: 1.8em;">Capitaliser</h3>
+                        <p style="font-size: 1.2em; line-height: 1.8; margin-top: 20px; color: #333;">
+                            Sur la notoriété exceptionnelle (93%) et le patrimoine historique de la marque : réseau, savoir-faire, qualité éprouvée
+                        </p>
+                    </div>
+                    <div class="column" style="background: linear-gradient(135deg, #fff5e6 0%, #ffe8f0 100%); border-left: 6px solid #FF6B9D; padding: 40px;">
+                        <h3 style="font-size: 1.8em;">Transformer</h3>
+                        <p style="font-size: 1.2em; line-height: 1.8; margin-top: 20px; color: #333;">
+                            La perception auprès d'une cible jeune, urbaine, exigeante et en forte croissance démographique
+                        </p>
+                    </div>
+                </div>
+
+                <div class="data-insight" style="margin-top: 40px; padding: 30px; font-size: 1.1em;">
+                    <strong>Synthèse de l'enquête terrain :</strong> Les 43 répondants confirment intégralement le diagnostic initial. Le triptyque d'image problématique (familiale 95%, pas moderne 80%, ne correspond pas 70%) est statistiquement robuste et constitue le frein majeur à la conquête du segment 25-40 ans. Le segment premium (47% budget 800€+) existe et justifie pleinement l'investissement. La stratégie duale (All-In Zen / Flex & Free) répond à la polarisation identifiée (50/50).
+                </div>
+
+                <div style="text-align: center; margin-top: 60px; padding: 40px; background: linear-gradient(135deg, #FFB84D 0%, #FF6B9D 100%); border-radius: 20px; color: white; box-shadow: 0 10px 40px rgba(255,107,157,0.3);">
+                    <div style="font-size: 2.2em; font-weight: 700; letter-spacing: 2px; margin-bottom: 20px;">
+                        LIBERTÉ • AUTHENTICITÉ • DESIGN
+                    </div>
+                    <div style="font-size: 1.4em; opacity: 0.95;">
+                        Le nouvel ADN de Pierre & Vacances
+                    </div>
+                    <div style="margin-top: 30px; font-size: 1.2em; font-style: italic;">
+                        "Le break qui te ressemble"
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div class="logo">Pierre & Vacances</div>
+                <div class="slide-number">13 / 13</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button id="prevBtn" onclick="changeSlide(-1)">← Précédent</button>
+        <button id="nextBtn" onclick="changeSlide(1)">Suivant →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+            
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === slides.length - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' && currentSlide > 0) changeSlide(-1);
+            if (e.key === 'ArrowRight' && currentSlide < slides.length - 1) changeSlide(1);
+        });
+
+        // Animation progressive au chargement
+        document.addEventListener('DOMContentLoaded', () => {
+            showSlide(0);
+            
+            const cards = document.querySelectorAll('.stat-card, .strategy-card, .point');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+
+        showSlide(0);
+    </script>
+</body>
+</html>
